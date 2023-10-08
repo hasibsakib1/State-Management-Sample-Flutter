@@ -45,10 +45,10 @@ class _NewContactViewState extends State<NewContactView> {
           TextButton(
             onPressed: () {
               final contact = Contact(name: _controller.text);
-              ContactBook().addContact(contact: contact);
+              ContactBook().addContact(newContact: contact);
               Navigator.pop(context);
             },
-            child: const Text('Add button'),
+            child: const Text('Add Contact'),
           )
         ],
       ),
