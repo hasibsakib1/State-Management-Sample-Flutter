@@ -10,13 +10,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final contactBook = ContactBook();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('ContactBook'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: ValueListenableBuilder(
+    var listView = ValueListenableBuilder(
           valueListenable: ContactBook(),
           builder: (BuildContext context, List<Contact> value, Widget? child) {
             return ListView.builder(
@@ -37,7 +31,15 @@ class HomePage extends StatelessWidget {
               },
             );
           },
-        ),
+        );
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('ContactBook'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: contactBook.length!=0 ? listView: Center(child: Text("OOPS... You have no contacts.")) ,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
