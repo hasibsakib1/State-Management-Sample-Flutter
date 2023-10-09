@@ -1,29 +1,35 @@
-import 'package:flutter/material.dart';
-
 import 'package:contacts/contact.dart';
-import 'package:contacts/contactbook.dart';
+import 'package:contacts/main.dart';
+import 'package:flutter/material.dart';
 import 'package:contacts/newcontactview.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends StatelessWidget {
+
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final contactBook = ContactBook();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
+}
 
-    var listView = ValueListenableBuilder(
-      valueListenable: ContactBook(),
-      builder: (BuildContext context, List<Contact> value, Widget? child) {
-        return ListView.builder(
-          itemCount: value.length,
+class _HomePageState extends ConsumerState<HomePage> {
+
+  
+  @override
+  Widget build(BuildContext context) {
+    final contacts = ref.watch(contactProvider);
+    final contactUpdater= ref.watch(contactProvider.notifier);
+
+    var listView= ListView.builder(
+          // itemCount: contacts.length,
           itemBuilder: (context, index) {
-            final contact = value[index];
+            final contact = contacts[index];
             return Padding(
               padding: const EdgeInsets.only(top:5, bottom: 5, right:10,left:10),
               child: Dismissible(
                 key: ValueKey(contact.id),
                 onDismissed: (direction) =>
-                    contactBook.removeContact(contact: contact),
+                    contactUpdater.removeContact(contact: contact),
                 child: Material(
                   borderRadius: BorderRadius.circular(10),
                   elevation: 3,
@@ -55,10 +61,8 @@ class HomePage extends StatelessWidget {
             );
           },
         );
-      },
-    );
 
-    return Scaffold(
+    return  Scaffold(
       appBar: AppBar(
         title: const Text('ContactBook'),
         leading: const Icon(Icons.contacts_outlined),
@@ -76,6 +80,6 @@ class HomePage extends StatelessWidget {
         },
         child: const Icon(Icons.add),
       ),
-    );
+    );;
   }
 }

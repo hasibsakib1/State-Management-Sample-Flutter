@@ -6,3 +6,5 @@ class Contact {
   final String id;
   Contact({required this.name, required this.phoneNumber}) : id = const Uuid().v4();
 }
+
+
