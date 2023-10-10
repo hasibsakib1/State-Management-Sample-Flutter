@@ -5,19 +5,15 @@ import 'contact.dart';
 
 
 class ContactBook extends StateNotifier<List<Contact>> {
-  ContactBook():super([Contact(name: "name", phoneNumber: "123123")]);
+  ContactBook():super([]);
 
   void addContact({required Contact newContact}) {
-    state.add(newContact);
-    // print(state.last.name);
-    
-    // notifyListeners();
+    state= [...state,newContact];
   }
 
   void removeContact({required Contact contact}) {
     if(state.contains(contact)){
-      state.remove(contact);
-      // notifyListeners();
+      state = state.where((element) => element.id != contact.id).toList();
     }
   }
 

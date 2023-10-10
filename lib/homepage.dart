@@ -1,4 +1,3 @@
-import 'package:contacts/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -40,23 +39,24 @@ class _HomePageState extends ConsumerState<HomePage> {
           trailing: IconButton(
             icon: Icon(Icons.delete),
             onPressed: () {
+              contactUpdater.removeContact(contact: contact);
               // Remove the contact when the delete button is pressed
-              setState(() {
-                contactUpdater.removeContact(contact: contact);
-              });
+              // setState(() {
+              //   contactUpdater.removeContact(contact: contact);
+              // });
             },
           ),
         );
         },
             )
       ),
-      bottomSheet: InkWell(
-        child: Container(
-          color: Colors.blue,
-          child: Text('Button'),
-        ),
-        onTap: () => print("hello ${contacts.last.name}"),
-      ),
+      // bottomSheet: InkWell(
+      //   child: Container(
+      //     color: Colors.blue,
+      //     child: Text('Button'),
+      //   ),
+      //   onTap: () => print("hello ${contacts.last.name}"),
+      // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
