@@ -1,18 +1,20 @@
-import 'package:contacts/contact.dart';
-import 'package:contacts/contactbook.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NewContactView extends StatefulWidget {
+import 'main.dart';
+// import 'contactbook.dart';
+import 'contact.dart';
+
+class NewContactView extends ConsumerStatefulWidget {
   const NewContactView({super.key});
 
   @override
-  State<NewContactView> createState() => _NewContactViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _NewContactViewState();
 }
 
-class _NewContactViewState extends State<NewContactView> {
+class _NewContactViewState extends ConsumerState<NewContactView> {
   late final TextEditingController _controller;
   late final TextEditingController _phoneController;
-
   @override
   void initState() {
     _controller = TextEditingController();
@@ -27,17 +29,20 @@ class _NewContactViewState extends State<NewContactView> {
     super.dispose();
   }
 
-  void buttonAction() {
+  void buttonAction(BuildContext context) {
     if (_controller.text.isNotEmpty && _phoneController.text.isNotEmpty) {
       final contact =
           Contact(name: _controller.text, phoneNumber: _phoneController.text);
-      ContactBook().addContact(newContact: contact);
+
+      final contactUpdater= ref.watch(contactProvider.notifier);
+      contactUpdater.addContact(newContact: contact);
       Navigator.pop(context);
     } else {}
   }
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create new contact'),
@@ -48,7 +53,7 @@ class _NewContactViewState extends State<NewContactView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
-              onEditingComplete: () => buttonAction(),
+              onEditingComplete: () => buttonAction(context),
               controller: _controller,
               decoration: const InputDecoration(
                 label: Text('Enter contact name'),
@@ -61,7 +66,7 @@ class _NewContactViewState extends State<NewContactView> {
               height: 5,
             ),
             TextField(
-              onEditingComplete: () => buttonAction(),
+              onEditingComplete: () => buttonAction(context),
               controller: _phoneController,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
@@ -82,8 +87,9 @@ class _NewContactViewState extends State<NewContactView> {
               label: Text('Add contact'),
             ),
             */
+            const SizedBox(height: 20,),
             OutlinedButton.icon(
-              onPressed: () => buttonAction(),
+              onPressed: () => buttonAction(context),
               icon: const Icon(Icons.group_add),
               label: const Text('Add Contact'),
             )

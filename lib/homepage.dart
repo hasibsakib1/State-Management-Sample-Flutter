@@ -1,8 +1,9 @@
 import 'package:contacts/contact.dart';
-import 'package:contacts/main.dart';
 import 'package:flutter/material.dart';
-import 'package:contacts/newcontactview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'main.dart';
+import 'newcontactview.dart';
 
 
 class HomePage extends ConsumerStatefulWidget {
@@ -14,14 +15,13 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
 
-  
   @override
   Widget build(BuildContext context) {
     final contacts = ref.watch(contactProvider);
     final contactUpdater= ref.watch(contactProvider.notifier);
-
+    // List contacts = contactsList as List;
     var listView= ListView.builder(
-          // itemCount: contacts.length,
+          itemCount: contacts.length,
           itemBuilder: (context, index) {
             final contact = contacts[index];
             return Padding(
@@ -33,7 +33,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 child: Material(
                   borderRadius: BorderRadius.circular(10),
                   elevation: 3,
-                  color: Color.fromARGB(255, 255, 255, 255),
+                  color:const Color.fromARGB(255, 255, 255, 255),
                   child: ListTile(
                     leading: Container(
                       height: 50,
@@ -80,6 +80,6 @@ class _HomePageState extends ConsumerState<HomePage> {
         },
         child: const Icon(Icons.add),
       ),
-    );;
+    );
   }
 }

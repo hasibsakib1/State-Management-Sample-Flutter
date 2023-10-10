@@ -5,12 +5,11 @@ import 'contact.dart';
 
 
 class ContactBook extends StateNotifier<List<Contact>> {
-  ContactBook._sharedInstance():super([]);
-  static final ContactBook _shared = ContactBook._sharedInstance();
-  factory ContactBook() => _shared;
+  ContactBook():super([]);
 
   void addContact({required Contact newContact}) {
     state.add(newContact);
+    print(newContact.name);
     // notifyListeners();
   }
 
