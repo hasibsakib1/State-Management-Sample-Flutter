@@ -9,7 +9,7 @@ import 'homepage.dart';
 final contactProvider= StateNotifierProvider<ContactBook, List<Contact>>((ref) => ContactBook());
 
 void main() {
-  runApp(ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
