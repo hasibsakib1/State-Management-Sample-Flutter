@@ -1,3 +1,4 @@
+import 'package:contacts/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -34,9 +35,9 @@ class _NewContactViewState extends ConsumerState<NewContactView> {
       final contact =
           Contact(name: _controller.text, phoneNumber: _phoneController.text);
 
-      final contactUpdater= ref.watch(contactProvider.notifier);
-      contactUpdater.addContact(newContact: contact);
-      Navigator.pop(context);
+      ref.read(contactProvider.notifier).addContact(newContact: contact);
+      
+      Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
     } else {}
   }
 

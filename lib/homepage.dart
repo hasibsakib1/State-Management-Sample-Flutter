@@ -15,52 +15,13 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
 
+  
+
   @override
   Widget build(BuildContext context) {
     final contacts = ref.watch(contactProvider);
     final contactUpdater= ref.watch(contactProvider.notifier);
-    // List contacts = contactsList as List;
-    var listView= ListView.builder(
-          itemCount: contacts.length,
-          itemBuilder: (context, index) {
-            final contact = contacts[index];
-            return Padding(
-              padding: const EdgeInsets.only(top:5, bottom: 5, right:10,left:10),
-              child: Dismissible(
-                key: ValueKey(contact.id),
-                onDismissed: (direction) =>
-                    contactUpdater.removeContact(contact: contact),
-                child: Material(
-                  borderRadius: BorderRadius.circular(10),
-                  elevation: 3,
-                  color:const Color.fromARGB(255, 255, 255, 255),
-                  child: ListTile(
-                    leading: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color.fromARGB(255, 222, 182, 196),
-                      ),
-                      child: Center(
-                        child: Text(
-                          contact.name[0],
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
-                        ),
-                      ),
-                    ),
-                    title: Text(contact.name),
-                    subtitle: Text(contact.phoneNumber),
-                  ),
-                ),
-              ),
-            );
-          },
-        );
+
 
     return  Scaffold(
       appBar: AppBar(
@@ -69,7 +30,32 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 10),
-        child: listView,
+        child: ListView.builder(
+        itemCount: contacts.length,
+        itemBuilder: (context, index) {
+        final contact = contacts[index];
+        return ListTile(
+          title: Text(contact.name),
+          subtitle: Text(contact.phoneNumber),
+          trailing: IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              // Remove the contact when the delete button is pressed
+              setState(() {
+                contactUpdater.removeContact(contact: contact);
+              });
+            },
+          ),
+        );
+        },
+            )
+      ),
+      bottomSheet: InkWell(
+        child: Container(
+          color: Colors.blue,
+          child: Text('Button'),
+        ),
+        onTap: () => print("hello ${contacts.last.name}"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

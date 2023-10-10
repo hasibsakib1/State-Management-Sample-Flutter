@@ -5,11 +5,12 @@ import 'contact.dart';
 
 
 class ContactBook extends StateNotifier<List<Contact>> {
-  ContactBook():super([]);
+  ContactBook():super([Contact(name: "name", phoneNumber: "123123")]);
 
   void addContact({required Contact newContact}) {
     state.add(newContact);
-    print(newContact.name);
+    // print(state.last.name);
+    
     // notifyListeners();
   }
 
